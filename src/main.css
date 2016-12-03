@@ -99,3 +99,37 @@
   font-size: 16px;
   padding: 10px 0;
 }
+.blog-wrap{
+  flex-grow: 1;
+  margin-top: 10px;
+}
+.blog-card{
+  padding: 0 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.blog-index{
+  background-color: #00bcd4;
+  font-size: 28px;
+  text-align: center;
+  color: #fff;
+  line-height: 2.0;
+  height: 60;
+}
+.blog-index span{
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 36px;
+}
+.blog-content{
+  box-shadow: rgba(0, 0, 0, 0.12) 3px 3px 6px,rgba(0, 0, 0, 0.12) 0px 1px 10px;
+  padding: 10px;
+  color: #666;
+}
+.blog-content h3{
+  margin: 10px 0;
+}
