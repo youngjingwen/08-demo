@@ -28,7 +28,6 @@ class App extends React.Component {
             this.props.router.isActive('blog') ? 'Blog' :
             this.props.router.isActive('work') ? 'Work' : 'About'
     })
-    console.log(this.props.router);
   }
   render () {
     return(
