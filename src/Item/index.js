@@ -1,16 +1,35 @@
 import React, { PropTypes } from 'react'
 import marked from 'marked'
+import axios from 'axios'
+import hljs from 'highlight.js'
+
+import Loading from '../component/loading';
 
 class Item extends React.Component {
+  constructor(){
+    super()
+    this.state={
+      data:''
+    }
+  }
+  componentDidMount(){
+    let address = this.props.params.title
+    axios.get(`https://raw.githubusercontent.com/youngjingwen/08-demo/master/data/${address}.md`)
+      .then( res => this.setState({data:res.data}) )
+      .catch( err => alert(err))
+  }
   render () {
-    let content = this.props.params.title== 0 ? '这是第一个页面' :
-                  this.props.params.title== 1 ? '这是第二个页面' :
-                  this.props.params.title== 2 ? '这是第三个页面' :
-                  this.props.params.title== 3 ? '这是第四个页面' : '这是第N个页面'
+    marked.setOptions({
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
     return(
-      <div>
-        {content}
-        <div dangerouslySetInnerHTML={{__html:marked('# asdsadas')}}></div>
+      <div className='item-wrap'>
+        {
+          this.state.data.length==0 ? <Loading/> :
+          <div className='post-content' dangerouslySetInnerHTML={{__html:marked(this.state.data)}} />
+        }
       </div>
     )
   }
