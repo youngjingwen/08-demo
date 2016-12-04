@@ -14,7 +14,7 @@ class Item extends React.Component {
   }
   componentDidMount(){
     let address = this.props.params.title
-    axios.get(`https://raw.githubusercontent.com/youngjingwen/08-demo/master/data/${address}.md`)
+    axios.get(`https://raw.githubusercontent.com/youngjingwen/08-demo/master/data/${address}.md?sa`)
       .then( res => this.setState({data:res.data}) )
       .catch( err => alert(err))
   }

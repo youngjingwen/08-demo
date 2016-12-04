@@ -1,51 +1,59 @@
 import React from 'react';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import Routers from './router'
-import NavHeader from './component/NavHeader'
-import NavFooter from './component/NavFooter'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import NavHeader from './component/NavHeader';
+import NavFooter from './component/NavFooter';
+import LeftNav from './component/LeftNav';
 
 class App extends React.Component {
   constructor(){
-    super()
+    super();
     this.state={
-      title:'blog'
+      title:'Home',
+      showLeftNav:false
     }
   }
-  getChildContext(){
-    return {muiTheme:getMuiTheme()}
+  getChildContext() {
+    return {muiTheme: getMuiTheme()};
   }
   componentWillReceiveProps(){
+    this.setTitle();
+  }
+  componentWillMount(){
+    this.setTitle();
+    this.setNavBar();
+  }
+  componentDidMount(){
+    window.onresize=this.setNavBar.bind(this);
+  }
+  setNavBar(){
     this.setState({
-      title:this.props.router.isActive('/',true) ? 'Home' :
-            this.props.router.isActive('blog') ? 'Blog' :
-            this.props.router.isActive('work') ? 'Work' : 'About'
+      showLeftNav:window.innerWidth>760 ? true : false
     })
   }
-  componentWillmount(){
+  setTitle(){
     this.setState({
       title:this.props.router.isActive('/',true) ? 'Home' :
-            this.props.router.isActive('blog') ? 'Blog' :
-            this.props.router.isActive('work') ? 'Work' :
-            this.props.router.isActive('about') ? 'about':'blog'
+      this.props.router.isActive('blog') ? 'Blog' :
+      this.props.router.isActive('work') ? 'Work' :
+      this.props.router.isActive('about') ? 'About' : 'Blog'
     })
   }
   render () {
     return(
       <div className='my-wrap'>
-        <NavHeader title={this.state.title}/>
+        {this.state.showLeftNav?<LeftNav title={this.state.title}/>:<NavHeader title={this.state.title}/>}
+
         <div className='main'>
           {this.props.children}
         </div>
-        <NavFooter />
+
+        {this.state.showLeftNav? null : <NavFooter />}
       </div>
     )
   }
 }
-App.contextTypes ={
-  router:React.PropTypes.object
-}
-App.childContextTypes ={
+App.childContextTypes = {
   muiTheme: React.PropTypes.object
-}
+};
 export default App;
